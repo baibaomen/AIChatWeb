@@ -122,7 +122,7 @@ This project depends on the given projects below.
 
 ### AI Chat Console(front-end project)
 
-https://github.com/Nanjiren01/AIChatConsole
+https://github.com/baibaomen/AIChatConsole
 
 #### 会员列表 Member List
 
@@ -143,7 +143,7 @@ https://github.com/Nanjiren01/AIChatAdmin
 3. 连接云服务器，在命令行中运行以下代码
 
 ```shell
-bash <(curl -s https://raw.githubusercontent.com/Nanjiren01/AIChatWeb/main/scripts/setup.sh)
+bash <(curl -s https://raw.githubusercontent.com/baibaomen/AIChatWeb/pro/scripts/setup-pro.sh)
 ```
 
 命令运行过程中，需要设置超级管理员的账号和密码（请将aichat888更改为自己的账号密码并牢记），如下所示：

@@ -76,7 +76,7 @@ done
 
 # Clone the repository and install dependencies
 echo "curl -o docker-compose.yml..."
-curl -o docker-compose.yml https://raw.githubusercontent.com/Nanjiren01/AIChatWeb/pro/docker-compose.yml
+curl -o docker-compose.yml https://raw.githubusercontent.com/baibaomen/AIChatWeb/pro/docker-compose.yml
 
 
 echo "Please input the super admin username. "

@@ -40,13 +40,13 @@ services:
       - "8082:8080"
 
   web:
-    image: nanjiren01/aichat-web:pro-latest
+    image: baibaomen/aichat-web:pro-latest
     container_name: aichat-web
     restart: always
     depends_on:
       - admin
     ports:
-      - "80:3000"
+      - "8088:3000"
     environment:
       BASE_URL: http://aichat-admin:8080
       TZ: Asia/Shanghai
