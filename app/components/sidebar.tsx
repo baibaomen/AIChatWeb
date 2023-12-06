@@ -230,44 +230,55 @@ export function SideBar(props: {
         <div
           className={styles["sidebar-title"]}
           dangerouslySetInnerHTML={{
-            __html: websiteConfigStore.mainTitle || "AIChat Next Web",
+            __html: websiteConfigStore.mainTitle || "金融街大模型",
           }}
           data-tauri-drag-region
         ></div>
-        <div
-          className={styles["sidebar-sub-title"]}
-          dangerouslySetInnerHTML={{
-            __html:
-              websiteConfigStore.subTitle || "Build your own AI assistant.",
-          }}
-        ></div>
-        <div className={styles["sidebar-logo"] + " no-dark"}>
-          {logoLoading ? (
-            <></>
-          ) : !logoUrl ? (
-            <NextImage src={ChatBotIcon.src} width={44} height={44} alt="bot" />
-          ) : (
-            <img src={logoUrl} width={44} height={44} />
-          )}
-        </div>
+        {false && (
+          <div
+            className={styles["sidebar-sub-title"]}
+            dangerouslySetInnerHTML={{
+              __html:
+                websiteConfigStore.subTitle || "Build your own AI assistant.",
+            }}
+          ></div>
+        )}
+        {false && (
+          <div className={styles["sidebar-logo"] + " no-dark"}>
+            {logoLoading ? (
+              <></>
+            ) : !logoUrl ? (
+              <NextImage
+                src={ChatBotIcon.src}
+                width={44}
+                height={44}
+                alt="bot"
+              />
+            ) : (
+              <img src={logoUrl} width={44} height={44} />
+            )}
+          </div>
+        )}
       </div>
 
-      <div className={styles["sidebar-header-bar"]}>
-        <IconButton
-          icon={<UserIcon />}
-          text={shouldNarrow ? undefined : Locale.User.Name}
-          className={styles["sidebar-bar-button"]}
-          onClick={() => navigate(Path.Profile)}
-          shadow
-        />
-        <IconButton
-          icon={<CartIcon />}
-          text={shouldNarrow ? undefined : Locale.Shop.Name}
-          className={styles["sidebar-bar-button"]}
-          onClick={() => navigate(Path.Pricing)}
-          shadow
-        />
-      </div>
+      {false && (
+        <div className={styles["sidebar-header-bar"]}>
+          <IconButton
+            icon={<UserIcon />}
+            text={shouldNarrow ? undefined : Locale.User.Name}
+            className={styles["sidebar-bar-button"]}
+            onClick={() => navigate(Path.Profile)}
+            shadow
+          />
+          <IconButton
+            icon={<CartIcon />}
+            text={shouldNarrow ? undefined : Locale.Shop.Name}
+            className={styles["sidebar-bar-button"]}
+            onClick={() => navigate(Path.Pricing)}
+            shadow
+          />
+        </div>
+      )}
 
       <div
         className={styles["sidebar-body"]}

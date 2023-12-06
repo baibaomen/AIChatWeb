@@ -315,7 +315,7 @@ EOT
     
       # Clone the repository and install dependencies
       echo "curl -o docker-compose.yml..."
-      curl -o docker-compose.yml https://raw.githubusercontent.com/Nanjiren01/AIChatWeb/pro/docker-compose.yml
+      curl -o docker-compose.yml https://raw.githubusercontent.com/baibaomen/AIChatWeb/pro/docker-compose.yml
     
       # Setup AIChat Pro Authorized Repository Account
       echo "#############################################################################"
@@ -839,7 +839,7 @@ EOT
     
       # Clone the repository and install dependencies
       echo "curl -o docker-compose.yml..."
-      curl -o docker-compose.yml https://raw.githubusercontent.com/Nanjiren01/AIChatWeb/pro/docker-compose.yml
+      curl -o docker-compose.yml https://raw.githubusercontent.com/baibaomen/AIChatWeb/pro/docker-compose.yml
     
       # Setup AIChat Pro Authorized Repository Account
       echo "#############################################################################"
@@ -1363,7 +1363,7 @@ EOT
     
       # Clone the repository and install dependencies
       echo "curl -o docker-compose.yml..."
-      curl -o docker-compose.yml https://raw.githubusercontent.com/Nanjiren01/AIChatWeb/pro/docker-compose.yml
+      curl -o docker-compose.yml https://raw.githubusercontent.com/baibaomen/AIChatWeb/pro/docker-compose.yml
     
       # Setup AIChat Pro Authorized Repository Account
       echo "#############################################################################"
