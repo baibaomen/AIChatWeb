@@ -328,9 +328,9 @@ EOT
       echo "#############################################################################"
       while true; do
         echo "请输入AIChat专业版授权私有库的授权用户名："
-        read -p "授权用户名： " DOCKER_REGISTRY_USERNAME
+        # read -p "授权用户名： " DOCKER_REGISTRY_USERNAME
         echo "请输入AIChat专业版授权私有库的授权密码："
-        read -s -p "授权密码： " DOCKER_REGISTRY_PASSWORD
+        # read -s -p "授权密码： " DOCKER_REGISTRY_PASSWORD
     
         # Log in to the AIChat Pro private repository
         echo ""
@@ -354,7 +354,7 @@ EOT
       echo "###################### 配置AIChat专业版许可证 ######################"
       echo "###################################################################"
       while true; do
-          read -p "请输入许可证的QQ邮箱：" LICENSE_SUBJECT
+          # read -p "请输入许可证的QQ邮箱：" LICENSE_SUBJECT
           if [[ -n $LICENSE_SUBJECT ]]; then
               if [[ $LICENSE_SUBJECT =~ ^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$ ]]; then
                   echo "输入的许可证QQ邮箱有效"
