@@ -31,7 +31,7 @@ services:
       - "8082:8080"
 
   web:
-    image: nanjiren01/aichat-web:latest
+    image: baibaomen/aichat-web:latest
     container_name: aichat-web
     restart: always
     depends_on:
