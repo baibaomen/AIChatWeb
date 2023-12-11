@@ -52,7 +52,7 @@ services:
       TZ: Asia/Shanghai
 
   console:
-    image: nanjiren01/aichat-console:pro-latest
+    image: baibaomen/aichat-console:pro-latest
     container_name: aichat-console
     restart: always
     depends_on:
