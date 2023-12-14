@@ -161,9 +161,13 @@ export function Login(props: { logoLoading: boolean; logoUrl?: string }) {
   const token = queryParams.get("token");
   useEffect(() => {
     if (!!token) {
-      setUsername("[SsoLogin]");
-      setPassword(token);
-      login();
+      setTimeout(() => {
+        setUsername("[SsoLogin]");
+        setPassword(token);
+        setTimeout(() => {
+          login();
+        }, 1000);
+      }, 1000);
     }
   }, [token]);
 
