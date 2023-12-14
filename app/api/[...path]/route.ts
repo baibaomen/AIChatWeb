@@ -119,13 +119,17 @@ async function handle(req: NextRequest) {
 
     const method = req.method;
     if (method === "POST" && uri === "login") {
+      console.log("process login post");
       const txt = await req.text();
+      console.log("req.text is :" + txt);
       const token = extractToken(txt);
-
+      console.log("token is:" + token);
       const tRsp = await fetch(
         "http://47.251.66.86:8081/validate?token=" + token,
       );
       const tokenResp = await tRsp.json();
+
+      console.log("8081 returned:" + JSON.stringify(tokenResp));
 
       if (tokenResp) {
         console.log("tokenResp", tokenResp);
