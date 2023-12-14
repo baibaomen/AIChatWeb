@@ -373,7 +373,7 @@ export function Login(props: { logoLoading: boolean; logoUrl?: string }) {
                   />
                 </ListItem>
               )}
-              {registerType !== REG_TYPE_CLOSE && (
+              {false && registerType !== REG_TYPE_CLOSE && (
                 <ListItem>
                   <IconButton
                     text={Locale.LoginPage.GoToRegister}
