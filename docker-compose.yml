@@ -40,7 +40,7 @@ services:
       - "8082:8080"
 
   web:
-    image: nanjiren01/aichat-web:pro-latest
+    image: baibaomen/aichat-web:pro-latest
     container_name: aichat-web
     restart: always
     depends_on:
@@ -52,7 +52,7 @@ services:
       TZ: Asia/Shanghai
 
   console:
-    image: nanjiren01/aichat-console:pro-latest
+    image: baibaomen/aichat-console:pro-latest
     container_name: aichat-console
     restart: always
     depends_on:
