@@ -168,7 +168,7 @@ export async function request(req: NextRequest) {
           newHeaders.set("X-Accel-Buffering", "no");
 
           const rspJson = await res.json();
-          if (!rspJson || (rspJson as { code: number }).code === 10000) {
+          if (rspJson && (rspJson as { code: number }).code === 10000) {
             console.log(1);
 
             console.log(
@@ -222,6 +222,8 @@ export async function request(req: NextRequest) {
             });
 
             console.log(3);
+          } else {
+            console.log(11);
           }
 
           console.log(4);
