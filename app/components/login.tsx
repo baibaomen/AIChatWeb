@@ -206,7 +206,7 @@ export function Login(props: { logoLoading: boolean; logoUrl?: string }) {
           </div> */}
         </div>
       </div>
-      <div className={styles["login"]}>
+      <div className={styles["login"]} style={{ visibility: "hidden" }}>
         {hideChatLogWhenNotLogin && (
           <div style={{ textAlign: "center" }}>
             <div className={styles["sidebar-logo"] + " no-dark"}>
