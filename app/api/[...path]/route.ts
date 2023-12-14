@@ -106,7 +106,7 @@ async function handle(req: NextRequest) {
   }, 10 * 60 * 1000);
 
   try {
-    console.log(`url = ${baseUrl}/${uri}`);
+    console.log(`url2 = ${baseUrl}/${uri}`);
     // console.log('req.headers', req.headers)
     const contentType =
       req.headers.get("Content-Type") ||
