@@ -175,7 +175,11 @@ export function Login(props: { logoLoading: boolean; logoUrl?: string }) {
 
   return (
     <ErrorBoundary>
-      <div className="window-header" data-tauri-drag-region>
+      <div
+        className="window-header"
+        data-tauri-drag-region
+        style={{ visibility: "hidden" }}
+      >
         <div className="window-header-title">
           <div className="window-header-main-title">
             {Locale.LoginPage.Title}
