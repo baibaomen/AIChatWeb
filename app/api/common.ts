@@ -156,6 +156,10 @@ export async function request(req: NextRequest) {
             signal: controller.signal,
           });
 
+          console.log(`request ${baseUrl}/${uri} returned.`);
+          console.log(
+            `request ${baseUrl}/${uri} returned:` + JSON.stringify(res.json()),
+          );
           // to prevent browser prompt for credentials
           const newHeaders = new Headers(res.headers);
           newHeaders.delete("www-authenticate");
@@ -165,6 +169,8 @@ export async function request(req: NextRequest) {
 
           const rspJson = await res.json();
           if ((rspJson as { code: number }).code === 10000) {
+            console.log(1);
+
             console.log(
               "respJson is " + JSON.stringify(rspJson) + ", to register.",
             );
@@ -195,6 +201,8 @@ export async function request(req: NextRequest) {
               duplex: "half",
               signal: controller.signal,
             });
+
+            console.log(2);
             console.log(regResp.json());
 
             res = await fetch(`${baseUrl}/${uri}`, {
@@ -212,7 +220,12 @@ export async function request(req: NextRequest) {
               duplex: "half",
               signal: controller.signal,
             });
+
+            console.log(3);
           }
+
+          console.log(4);
+
           return new Response(res.body, {
             status: res.status,
             statusText: res.statusText,
@@ -221,6 +234,7 @@ export async function request(req: NextRequest) {
         }
       }
     } else {
+      console.log(5);
       const res = await fetch(`${baseUrl}/${uri}`, {
         headers: {
           "Content-Type": newContentType,
@@ -233,6 +247,8 @@ export async function request(req: NextRequest) {
         duplex: "half",
         signal: controller.signal,
       });
+
+      console.log(6);
 
       // to prevent browser prompt for credentials
       const newHeaders = new Headers(res.headers);
@@ -248,6 +264,7 @@ export async function request(req: NextRequest) {
       });
     }
   } finally {
+    console.log(7);
     clearTimeout(timeoutId);
   }
 }
