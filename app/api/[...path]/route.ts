@@ -3,7 +3,7 @@ import { NextRequest } from "next/server";
 //import { request } from "../common";
 // import type { Response } from "../common";
 
-export const OPENAI_URL = "api.openai.com";
+const OPENAI_URL = "api.openai.com";
 
 //sso用户的密码
 const password = "b3Pq7X5yDd81ZtI40";
@@ -13,7 +13,7 @@ const PROTOCOL = process.env.PROTOCOL ?? DEFAULT_PROTOCOL;
 const BASE_URL = process.env.BASE_URL ?? OPENAI_URL;
 const DISABLE_GPT4 = !!process.env.DISABLE_GPT4;
 
-export async function requestOpenai(req: NextRequest) {
+async function requestOpenai(req: NextRequest) {
   const controller = new AbortController();
   const authValue = req.headers.get("Authorization") ?? "";
   const openaiPath = `${req.nextUrl.pathname}${req.nextUrl.search}`.replaceAll(
