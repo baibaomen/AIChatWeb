@@ -157,7 +157,7 @@ export async function request(req: NextRequest) {
           });
 
           console.log(`request ${baseUrl}/${uri} returned.`);
-          const rspJson = await res.json();
+          var rspJson = await res.json();
           console.log(
             `request ${baseUrl}/${uri} returned:` + JSON.stringify(rspJson),
           );
@@ -221,6 +221,8 @@ export async function request(req: NextRequest) {
               duplex: "half",
               signal: controller.signal,
             });
+
+            rspJson = await res.json();
 
             console.log(3);
           } else {
