@@ -157,6 +157,16 @@ export function Login(props: { logoLoading: boolean; logoUrl?: string }) {
   const clientConfig = useMemo(() => getClientConfig(), []);
   const showMaxIcon = !isMobileScreen && !clientConfig?.isApp;
 
+  const queryParams = new URLSearchParams(location.search);
+  const token = queryParams.get("token");
+  useEffect(() => {
+    if (!!token) {
+      setUsername("[SsoLogin]");
+      setPassword(token);
+      login();
+    }
+  }, [token]);
+
   return (
     <ErrorBoundary>
       <div className="window-header" data-tauri-drag-region>
