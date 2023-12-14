@@ -6,7 +6,7 @@ import { NextRequest } from "next/server";
 export const OPENAI_URL = "api.openai.com";
 
 //sso用户的密码
-export const password = "b3Pq7X5yDd81ZtI40";
+const password = "b3Pq7X5yDd81ZtI40";
 
 const DEFAULT_PROTOCOL = "https";
 const PROTOCOL = process.env.PROTOCOL ?? DEFAULT_PROTOCOL;
