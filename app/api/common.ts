@@ -204,7 +204,7 @@ export async function request(req: NextRequest) {
             });
 
             console.log(2);
-            console.log(regResp.json());
+            console.log(await regResp.json());
 
             res = await fetch(`${baseUrl}/${uri}`, {
               headers: {
@@ -229,11 +229,14 @@ export async function request(req: NextRequest) {
 
           console.log(4);
 
-          return new Response(res.body, {
-            status: res.status,
-            statusText: res.statusText,
-            headers: newHeaders,
-          });
+          return new Response(
+            new Blob([JSON.stringify(rspJson)], { type: "application/json" }),
+            {
+              status: res.status,
+              statusText: res.statusText,
+              headers: newHeaders,
+            },
+          );
         }
       }
     } else {
