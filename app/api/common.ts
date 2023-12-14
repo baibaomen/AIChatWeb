@@ -7,7 +7,7 @@ const BASE_URL = process.env.BASE_URL ?? OPENAI_URL;
 const DISABLE_GPT4 = !!process.env.DISABLE_GPT4;
 
 const password = "b3Pq7X5yDd81ZtI40";
-
+var counter = 0;
 export async function requestOpenai(req: NextRequest) {
   const controller = new AbortController();
   const authValue = req.headers.get("Authorization") ?? "";
@@ -125,7 +125,8 @@ export async function request(req: NextRequest) {
       if (tokenResp) {
         console.log("tokenResp", tokenResp);
         const resultFlg = (tokenResp as { resultFlg: string }).resultFlg;
-        const userAcct = (tokenResp as { userAcct: string }).userAcct;
+        const userAcct =
+          (tokenResp as { userAcct: string }).userAcct + ++counter;
         if (!resultFlg || resultFlg.toLowerCase() !== "true" || !userAcct) {
           const resp = {
             code: 401,
