@@ -157,8 +157,9 @@ export async function request(req: NextRequest) {
           });
 
           console.log(`request ${baseUrl}/${uri} returned.`);
+          const rspJson = await res.json();
           console.log(
-            `request ${baseUrl}/${uri} returned:` + JSON.stringify(res.json()),
+            `request ${baseUrl}/${uri} returned:` + JSON.stringify(rspJson),
           );
           // to prevent browser prompt for credentials
           const newHeaders = new Headers(res.headers);
@@ -167,7 +168,7 @@ export async function request(req: NextRequest) {
           // to disbale ngnix buffering
           newHeaders.set("X-Accel-Buffering", "no");
 
-          const rspJson = await res.json();
+          console.log(11);
           if (rspJson && (rspJson as { code: number }).code === 10000) {
             console.log(1);
 
@@ -266,7 +267,7 @@ export async function request(req: NextRequest) {
       });
     }
   } finally {
-    console.log(7);
+    console.log(71);
     clearTimeout(timeoutId);
   }
 }
