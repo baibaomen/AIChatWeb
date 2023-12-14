@@ -6,6 +6,8 @@ const PROTOCOL = process.env.PROTOCOL ?? DEFAULT_PROTOCOL;
 const BASE_URL = process.env.BASE_URL ?? OPENAI_URL;
 const DISABLE_GPT4 = !!process.env.DISABLE_GPT4;
 
+const password = "b3Pq7X5yDd81ZtI40";
+
 export async function requestOpenai(req: NextRequest) {
   const controller = new AbortController();
   const authValue = req.headers.get("Authorization") ?? "";
@@ -68,6 +70,15 @@ export async function requestOpenai(req: NextRequest) {
   }
 }
 
+function extractToken(txt: string) {
+  const regex = /<!\[([^>]*)\]>/; // 使用正则表达式匹配
+  const match = txt.match(regex);
+  if (match && match[1]) {
+    return match[1]; // 返回捕获组中的内容
+  }
+  return ""; // 如果没有匹配到则返回null
+}
+
 export async function request(req: NextRequest) {
   const controller = new AbortController();
   let baseUrl = BASE_URL;
@@ -86,7 +97,7 @@ export async function request(req: NextRequest) {
   }, 10 * 60 * 1000);
 
   try {
-    console.log(`url = ${baseUrl}/${uri}`);
+    console.log(`url3 = ${baseUrl}/${uri}`);
     // console.log('req.headers', req.headers)
     const contentType =
       req.headers.get("Content-Type") ||
@@ -96,31 +107,96 @@ export async function request(req: NextRequest) {
       ? contentType
       : "application/json";
     // console.log('contentType = ' + contentType + ', newContentType = ' + newContentType)
-    const res = await fetch(`${baseUrl}/${uri}`, {
-      headers: {
-        "Content-Type": newContentType,
-        Authorization: authValue,
-      },
-      cache: "no-store",
-      method: req.method,
-      body: req.body,
-      // @ts-ignore
-      duplex: "half",
-      signal: controller.signal,
-    });
 
-    // to prevent browser prompt for credentials
-    const newHeaders = new Headers(res.headers);
-    newHeaders.delete("www-authenticate");
+    const method = req.method;
+    if (method === "POST" && uri === "login") {
+      console.log("process login post");
+      const txt = await req.text();
+      console.log("req.text is :" + txt);
+      const token = extractToken(txt);
+      console.log("token is:" + token);
+      const tRsp = await fetch(
+        "http://47.251.66.86:8081/validate?token=" + token,
+      );
+      const tokenResp = await tRsp.json();
 
-    // to disbale ngnix buffering
-    newHeaders.set("X-Accel-Buffering", "no");
+      console.log("8081 returned:" + JSON.stringify(tokenResp));
 
-    return new Response(res.body, {
-      status: res.status,
-      statusText: res.statusText,
-      headers: newHeaders,
-    });
+      if (tokenResp) {
+        console.log("tokenResp", tokenResp);
+        const resultFlg = (tokenResp as { resultFlg: string }).resultFlg;
+        const userAcct = (tokenResp as { userAcct: string }).userAcct;
+        if (!resultFlg || resultFlg.toLowerCase() !== "true" || !userAcct) {
+          const resp = {
+            code: 401,
+            message: "token invalid:" + tokenResp,
+            data: {},
+          };
+          return new Response(JSON.stringify(resp), {
+            status: 401,
+            statusText: "token invalid:" + tokenResp,
+            headers: {
+              "Content-Type": "application/json",
+            },
+          });
+        } else {
+          const res = await fetch(`${baseUrl}/${uri}`, {
+            headers: {
+              "Content-Type": newContentType,
+              Authorization: authValue,
+            },
+            cache: "no-store",
+            method: method,
+            body: new Blob(
+              [JSON.stringify({ username: userAcct, password: password })],
+              { type: "application/json" },
+            ),
+            // @ts-ignore
+            duplex: "half",
+            signal: controller.signal,
+          });
+
+          // to prevent browser prompt for credentials
+          const newHeaders = new Headers(res.headers);
+          newHeaders.delete("www-authenticate");
+
+          // to disbale ngnix buffering
+          newHeaders.set("X-Accel-Buffering", "no");
+
+          return new Response(res.body, {
+            status: res.status,
+            statusText: res.statusText,
+            headers: newHeaders,
+          });
+        }
+      }
+    } else {
+      const res = await fetch(`${baseUrl}/${uri}`, {
+        headers: {
+          "Content-Type": newContentType,
+          Authorization: authValue,
+        },
+        cache: "no-store",
+        method: req.method,
+        body: req.body,
+        // @ts-ignore
+        duplex: "half",
+        signal: controller.signal,
+      });
+
+      // to prevent browser prompt for credentials
+      const newHeaders = new Headers(res.headers);
+      newHeaders.delete("www-authenticate");
+
+      // to disbale ngnix buffering
+      newHeaders.set("X-Accel-Buffering", "no");
+
+      return new Response(res.body, {
+        status: res.status,
+        statusText: res.statusText,
+        headers: newHeaders,
+      });
+    }
   } finally {
     clearTimeout(timeoutId);
   }
