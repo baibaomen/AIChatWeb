@@ -1,18 +1,13 @@
 import { NextRequest } from "next/server";
-import {
-  validToken,
-  generateMD5,
-  extractToken,
-  systemFlag,
-  pubKey,
-  fromSystemFlag,
-  password,
-} from "./../../../pages/api/sso";
 
 //import { request } from "../common";
 // import type { Response } from "../common";
 
 export const OPENAI_URL = "api.openai.com";
+
+//sso用户的密码
+export const password = "b3Pq7X5yDd81ZtI40";
+
 const DEFAULT_PROTOCOL = "https";
 const PROTOCOL = process.env.PROTOCOL ?? DEFAULT_PROTOCOL;
 const BASE_URL = process.env.BASE_URL ?? OPENAI_URL;
@@ -80,6 +75,15 @@ export async function requestOpenai(req: NextRequest) {
   }
 }
 
+function extractToken(txt: string) {
+  const regex = /<!\[([^>]*)\]>/; // 使用正则表达式匹配
+  const match = txt.match(regex);
+  if (match && match[1]) {
+    return match[1]; // 返回捕获组中的内容
+  }
+  return ""; // 如果没有匹配到则返回null
+}
+
 async function handle(req: NextRequest) {
   const ip = req.headers.get("X-Forwarded-For") || req.ip;
   req.headers.set("X-Forwarded-For", ip || "");
@@ -117,18 +121,9 @@ async function handle(req: NextRequest) {
     if (method === "POST" && uri === "login") {
       const txt = await req.text();
       const token = extractToken(txt);
-      const timeStamp = Date.now().toString();
-      const signData = `${systemFlag}#${timeStamp}#${token}#${pubKey}`;
-      const sign = generateMD5(signData);
 
-      const tokenResp = await validToken(
-        token,
-        timeStamp,
-        systemFlag,
-        sign,
-        fromSystemFlag,
-        "",
-      );
+      const tRsp = await fetch("http://localhost:8081/validate?token=" + token);
+      const tokenResp = await tRsp.json();
 
       if (tokenResp) {
         console.log("tokenResp", tokenResp);
