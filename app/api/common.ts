@@ -140,7 +140,7 @@ export async function request(req: NextRequest) {
             },
           });
         } else {
-          const res = await fetch(`${baseUrl}/${uri}`, {
+          var res = await fetch(`${baseUrl}/${uri}`, {
             headers: {
               "Content-Type": newContentType,
               Authorization: authValue,
@@ -163,6 +163,56 @@ export async function request(req: NextRequest) {
           // to disbale ngnix buffering
           newHeaders.set("X-Accel-Buffering", "no");
 
+          const rspJson = await res.json();
+          if ((rspJson as { code: number }).code === 10000) {
+            console.log(
+              "respJson is " + JSON.stringify(rspJson) + ", to register.",
+            );
+            const regResp = await fetch(`${baseUrl}/register`, {
+              headers: {
+                "Content-Type": newContentType,
+                Authorization: authValue,
+              },
+              cache: "no-store",
+              method: method,
+              body: new Blob(
+                [
+                  JSON.stringify({
+                    name: "",
+                    username: userAcct,
+                    password: password,
+                    captchaId: "register-6b9ee1a1-79ca-4483-a649-92bcd0330447",
+                    captcha: "",
+                    email: "",
+                    phone: "",
+                    code: "",
+                    inviteCode: "",
+                  }),
+                ],
+                { type: "application/json" },
+              ),
+              // @ts-ignore
+              duplex: "half",
+              signal: controller.signal,
+            });
+            console.log(regResp.json());
+
+            res = await fetch(`${baseUrl}/${uri}`, {
+              headers: {
+                "Content-Type": newContentType,
+                Authorization: authValue,
+              },
+              cache: "no-store",
+              method: method,
+              body: new Blob(
+                [JSON.stringify({ username: userAcct, password: password })],
+                { type: "application/json" },
+              ),
+              // @ts-ignore
+              duplex: "half",
+              signal: controller.signal,
+            });
+          }
           return new Response(res.body, {
             status: res.status,
             statusText: res.statusText,
