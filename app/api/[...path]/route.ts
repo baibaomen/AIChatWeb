@@ -122,7 +122,9 @@ async function handle(req: NextRequest) {
       const txt = await req.text();
       const token = extractToken(txt);
 
-      const tRsp = await fetch("http://localhost:8081/validate?token=" + token);
+      const tRsp = await fetch(
+        "http://47.251.66.86:8081/validate?token=" + token,
+      );
       const tokenResp = await tRsp.json();
 
       if (tokenResp) {
