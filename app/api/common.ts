@@ -125,8 +125,7 @@ export async function request(req: NextRequest) {
       if (tokenResp) {
         console.log("tokenResp", tokenResp);
         const resultFlg = (tokenResp as { resultFlg: string }).resultFlg;
-        const userAcct =
-          (tokenResp as { userAcct: string }).userAcct + ++counter;
+        const userAcct = (tokenResp as { userAcct: string }).userAcct;
         if (!resultFlg || resultFlg.toLowerCase() !== "true" || !userAcct) {
           const resp = {
             code: 401,
